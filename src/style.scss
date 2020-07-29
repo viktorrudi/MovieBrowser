@@ -1,0 +1,19 @@
+.MovieStrip {
+  position: relative;
+  &__direction-button {
+    position: absolute;
+    bottom: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgb(255, 255, 255);
+    border: none;
+    padding: 10px;
+    height: 50px;
+    &.back {
+      left: -3px;
+    }
+    &.next {
+      right: -3px;
+    }
+  }
+}
