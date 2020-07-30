@@ -1,6 +1,7 @@
 import React from 'react'
 
 import MovieStrip from '../Shared/MovieStrip'
+import MovieSearch from './MovieSearch'
 
 import { FEATURE } from '../../constants'
 const { movie, tv } = FEATURE
@@ -18,8 +19,11 @@ function getFeatureProps(feature) {
 export default function FrontPage() {
   const features = [movie.popular, tv.popular, movie.family, movie.documentary]
   return features.map((feature) => (
-    <div style={{ margin: 20 }} key={feature.heading}>
-      <MovieStrip feature={feature} {...getFeatureProps(feature)} />
-    </div>
+    <>
+      <MovieSearch />
+      <div style={{ margin: 20 }} key={feature.heading}>
+        <MovieStrip feature={feature} {...getFeatureProps(feature)} />
+      </div>
+    </>
   ))
 }

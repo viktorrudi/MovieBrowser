@@ -28,7 +28,6 @@ function MovieStrip({
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
   const results = features[`${feature.specifier}_${feature.key}`]
-  console.log(features, feature.key)
   const isLoading = !results
 
   // TODO: Fix horrible way of making layout responsive

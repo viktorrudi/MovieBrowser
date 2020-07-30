@@ -3,15 +3,6 @@ const initialState = {
   features: {},
 }
 
-function normalize(dataAsArray) {
-  return dataAsArray.reduce((dataAsDictionary, data) => {
-    return {
-      ...dataAsDictionary,
-      [data.id]: data,
-    }
-  }, {})
-}
-
 export default function (state = initialState, action) {
   switch (action.type) {
     case 'STORE_CONFIG': {
