@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -6,9 +7,14 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 
 import * as CONST from '../../constants'
 
-export default function MovieButton({ movieDetails }) {
+export default function MovieButton({ movieDetails, feature }) {
+  const history = useHistory()
   return (
-    <Card>
+    <Card
+      onClick={() =>
+        history.push(`${feature.specifier}/${feature.key}/${movieDetails.id}`)
+      }
+    >
       <CardActionArea>
         <CardMedia
           style={{
@@ -17,7 +23,7 @@ export default function MovieButton({ movieDetails }) {
             imageRendering: '-webkit-optimize-contrast',
           }}
           image={`http://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
-          title="Contemplative Reptile"
+          title={movieDetails.original_title}
         />
       </CardActionArea>
     </Card>

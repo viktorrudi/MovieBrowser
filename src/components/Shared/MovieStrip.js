@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { connect } from 'react-redux'
 import {
   CarouselProvider,
   Slider,
@@ -10,25 +11,25 @@ import 'pure-react-carousel/dist/react-carousel.es.css'
 
 import MovieButton from './MovieButton'
 
+import { Typography } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import * as CONST from '../../constants'
-import { Typography } from '@material-ui/core'
+import { getFeatureDataAction } from '../../actions/movieDBActions'
 
-function getParameters(params = {}) {
-  const API_KEY = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
-  const parameters = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
-    .join('&')
-  return `?api_key=${API_KEY}&language=en-US&page=1${parameters}`
-}
-
-export default function MovieStrip({ feature, heading, params }) {
-  const [results, setResults] = useState([])
-  const [errors, setErrors] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+function MovieStrip({
+  feature,
+  params,
+  // From redux
+  features = {},
+  getFeatureData,
+}) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+  const results = features[`${feature.specifier}_${feature.key}`]
+  console.log(features, feature.key)
+  const isLoading = !results
 
   // TODO: Fix horrible way of making layout responsive
   const slideCount = Math.floor(screenWidth / 100) * 100
@@ -52,27 +53,8 @@ export default function MovieStrip({ feature, heading, params }) {
     1700: 10,
   }
 
-  async function getFeatureData() {
-    try {
-      const res = await fetch(
-        `${CONST.API_BASE_URL}${feature}${getParameters(params)}`
-      )
-      const data = await res.json()
-
-      setIsLoading(false)
-      if (data.success === false) {
-        throw Error(data.status_message)
-      }
-      setResults(data.results)
-    } catch (error) {
-      console.log(error.message)
-      setErrors(error.message)
-    }
-  }
-
   useEffect(() => {
-    setIsLoading(true)
-    getFeatureData()
+    getFeatureData(feature, params)
 
     const handleResize = () => setScreenWidth(window.innerWidth)
     window.addEventListener('resize', handleResize)
@@ -82,7 +64,7 @@ export default function MovieStrip({ feature, heading, params }) {
   return (
     <div className="MovieStrip">
       <Typography variant="h5" style={{ margin: '20px 0' }}>
-        {heading}
+        {feature.heading}
       </Typography>
       {isLoading ? (
         <div>Loading...</div>
@@ -99,7 +81,11 @@ export default function MovieStrip({ feature, heading, params }) {
           <Slider>
             {results.map((movie, i) => (
               <Slide index={i} key={movie.id}>
-                <MovieButton movieDetails={movie} key={movie.id} />
+                <MovieButton
+                  movieDetails={movie}
+                  feature={feature}
+                  key={movie.id}
+                />
               </Slide>
             ))}
           </Slider>
@@ -114,3 +100,11 @@ export default function MovieStrip({ feature, heading, params }) {
     </div>
   )
 }
+
+const mapStateToProps = (state) => ({
+  features: state.features,
+})
+
+export default connect(mapStateToProps, {
+  getFeatureData: getFeatureDataAction,
+})(MovieStrip)

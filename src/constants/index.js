@@ -7,28 +7,36 @@ export const MOVIE_BUTTON = {
 }
 
 export const FEATURE = {
-  MOVIE: {
-    POPULAR: {
-      URI: 'movie/popular',
-      HEADING: 'Popular Movies',
+  movie: {
+    popular: {
+      key: 'popular',
+      uri: 'movie/popular',
+      heading: 'Popular Movies',
+      specifier: 'movie',
     },
-    FAMILY: {
-      IS_GENRE: true,
-      HEADING: 'Family',
-      URI: 'discover/movie',
-      ID: 10751,
+    family: {
+      key: 'family',
+      isGenre: true,
+      heading: 'Family',
+      uri: 'discover/movie',
+      specifier: 'movie',
+      apiID: 10751,
     },
-    DOCUMENTARY: {
-      IS_GENRE: true,
-      HEADING: 'Documentary',
-      URI: 'discover/movie',
-      ID: 99,
+    documentary: {
+      key: 'documentary',
+      isGenre: true,
+      heading: 'Documentary',
+      uri: 'discover/movie',
+      specifier: 'movie',
+      apiID: 99,
     },
   },
-  SERIES: {
-    POPULAR: {
-      URI: 'tv/popular',
-      HEADING: 'Popular Series',
+  tv: {
+    popular: {
+      key: 'popular',
+      uri: 'tv/popular',
+      heading: 'Popular Series',
+      specifier: 'tv',
     },
   },
 }
