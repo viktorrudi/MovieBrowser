@@ -6,6 +6,16 @@ export const MOVIE_BUTTON = {
   WIDTH: 150,
 }
 
+export const BREAKPOINTS = {
+  '100-400': 2,
+  '400-600': 3,
+  '600-700': 4,
+  '700-900': 5,
+  '900-1100': 6,
+  '1100-1400': 7,
+  '1400-999999': 8,
+}
+
 export const FEATURE = {
   movie: {
     popular: {
@@ -13,7 +23,7 @@ export const FEATURE = {
       group: 'popular',
       uri: 'movie/popular',
       heading: 'Popular Movies',
-      specifier: 'movie',
+      mediaType: 'movie',
     },
     family: {
       key: 'family',
@@ -21,7 +31,7 @@ export const FEATURE = {
       isGenre: true,
       heading: 'Family',
       uri: 'discover/movie',
-      specifier: 'movie',
+      mediaType: 'movie',
       apiID: 10751,
     },
     documentary: {
@@ -30,7 +40,7 @@ export const FEATURE = {
       isGenre: true,
       heading: 'Documentary',
       uri: 'discover/movie',
-      specifier: 'movie',
+      mediaType: 'movie',
       apiID: 99,
     },
   },
@@ -40,7 +50,7 @@ export const FEATURE = {
       group: 'popular',
       uri: 'tv/popular',
       heading: 'Popular TV Series',
-      specifier: 'tv',
+      mediaType: 'tv',
     },
   },
   search: {
@@ -52,19 +62,19 @@ export const FEATURE = {
           key: 'person',
           group: 'search-result',
           heading: 'Actors',
-          specifier: 'person',
+          mediaType: 'person',
         },
         movie: {
           key: 'movie',
           group: 'search-result',
           heading: 'Movies',
-          specifier: 'movie',
+          mediaType: 'movie',
         },
         tv: {
           key: 'tv',
           group: 'search-result',
           heading: 'TV Series',
-          specifier: 'tv',
+          mediaType: 'tv',
         },
       },
     },

@@ -33,23 +33,23 @@ export default function (state = initialState, action) {
       const { payload } = action
       return {
         ...state,
-        features: {
-          ...state.features,
-          searchResults: payload.data,
-        },
+        searchResults: payload.data,
       }
     }
     case ACTION.CLEAR_SEARCH_FILTER: {
       return {
         ...state,
+        searchResults: {},
         filters: {
           ...state.filters,
           searchTerm: '',
         },
-        features: {
-          ...state.features,
-          searchResults: {},
-        },
+      }
+    }
+    case ACTION.FEATURE_ERROR: {
+      return {
+        ...state,
+        errorMessage: action.payload,
       }
     }
     default:

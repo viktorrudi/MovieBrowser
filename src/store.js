@@ -6,6 +6,8 @@ import movieDBReducer from './reducers/movieDBReducer'
 export const initialState = {
   config: {},
   features: {},
+  errorMessage: '',
+  searchResults: {},
   filters: {
     searchTerm: '',
   },

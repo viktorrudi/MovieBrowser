@@ -15,9 +15,23 @@ export const clearFilterAction = () => (dispatch) => {
   })
 }
 
+export const sendErrorAction = (errorMessage) => (dispatch) => {
+  dispatch({
+    type: ACTION.FEATURE_ERROR,
+    payload: errorMessage,
+  })
+}
+
+/**
+ * This method does network calls based on the requested feature and stores it in
+ * the store
+ * @param {Object} feature Feature to request from themoviedb API (movie, tv, person)
+ * @param {Object} params Necessary URL params needed for API
+ */
 export const getFeatureDataAction = (feature, params) => (dispatch) => {
-  const { specifier, group } = feature
-  const featureKey = `${specifier}_${group}`
+  // key in the features dictionary that is stored in redux
+  const featureKey = `${feature.mediaType}_${feature.group}`
+
   fetch(`${CONST.API_BASE_URL}${feature.uri}${UTIL.getParameters(params)}`)
     .then((res) => res.json())
     .then((data) => {
@@ -29,6 +43,9 @@ export const getFeatureDataAction = (feature, params) => (dispatch) => {
       let results = data.results
 
       if (isSearch) {
+        // When searching, the data is stored in a dictionary which are
+        // split based on the media_type (person, tv, movie), so we can
+        // target related constants and components
         results = results.reduce((features, ft) => {
           const addedFeatures = features[ft.media_type]
           return {
@@ -43,6 +60,7 @@ export const getFeatureDataAction = (feature, params) => (dispatch) => {
       const dispatchType = isSearch
         ? ACTION.STORE_SEARCH_RESULTS
         : ACTION.STORE_FEATURE
+
       dispatch({
         type: dispatchType,
         payload: {
@@ -51,14 +69,5 @@ export const getFeatureDataAction = (feature, params) => (dispatch) => {
         },
       })
     })
-    .catch((error) => {
-      console.log('error town', error)
-      dispatch({
-        type: ACTION.FEATURE_ERROR,
-        payload: {
-          errorMessage: error.message,
-          featureKey,
-        },
-      })
-    })
+    .catch((error) => sendErrorAction(error.message))
 }

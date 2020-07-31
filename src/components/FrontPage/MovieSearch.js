@@ -2,43 +2,42 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { connect } from 'react-redux'
 import debounce from 'debounce'
 
-import * as CONST from '../../constants'
-import * as UTIL from '../../utils'
-
-import { getFeatureDataAction } from '../../actions/movieDBActions'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import MovieStrip from '../Shared/MovieStrip'
 
-const { search } = CONST.FEATURE
+import { FEATURE } from '../../constants'
+import { getFeatureDataAction } from '../../actions/movieDBActions'
 
+/**
+ * This component is returned if you have a search query active
+ * It will debounce based on the input of the searchterm to not spam the API
+ * @param {Object} searchResults Response from search query
+ * @param {Object} filters For now only includes searchTerm
+ * @param {Function} getFeatureData Action for fetching media to store in redux
+ */
 function MovieSearch({
   // from Redux
-  features = {},
+  searchResults,
   filters,
   getFeatureData,
 }) {
   const { searchTerm } = filters
   const [isSearching, setIsSearching] = useState(false)
 
-  const searchParams = {
-    query: searchTerm,
-  }
+  const searchParams = { query: searchTerm }
   const debouncedGetFeatureData = useCallback(debounce(getFeatureData, 500), [])
-
-  // TODO
-  const errorMessage = ''
 
   useEffect(() => {
     if (searchTerm === '') return
-    debouncedGetFeatureData(search.multi, searchParams)
+    debouncedGetFeatureData(FEATURE.search.multi, searchParams)
 
     setIsSearching(false)
   }, [searchTerm])
 
   function renderSearchResults() {
-    const { searchResults = {} } = features
     return Object.entries(searchResults).map(([mediaType, results]) => {
-      const feature = search.multi.mediaTypes[mediaType]
+      const feature = FEATURE.search.multi.mediaTypes[mediaType]
       return (
         <MovieStrip key={mediaType} feature={feature} searchResults={results} />
       )
@@ -46,11 +45,14 @@ function MovieSearch({
   }
 
   if (searchTerm === '') return null
-  if (errorMessage) return <div>{errorMessage}</div>
 
   return (
     <div className="MovieSearch">
-      {isSearching ? <div>Searching...</div> : renderSearchResults()}
+      {isSearching ? (
+        <CircularProgress color="inherit" />
+      ) : (
+        renderSearchResults()
+      )}
     </div>
   )
 }
@@ -58,6 +60,7 @@ function MovieSearch({
 const mapStateToProps = (state) => ({
   features: state.features,
   filters: state.filters,
+  searchResults: state.searchResults,
 })
 
 export default connect(mapStateToProps, {

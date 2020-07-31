@@ -1,20 +1,9 @@
-import { useState, useEffect } from 'react'
-
-export function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-    return () => {
-      clearTimeout(handler)
-    }
-  }, [value])
-
-  return debouncedValue
-}
-
+/**
+ * Parses URL Parameters and attaches it, along with some
+ * default parameters
+ * @param {Object} params URL Parameters
+ * @returns {String} parameters to be attached to rest of URL
+ */
 export function getParameters(params = {}) {
   const defaultParams = {
     api_key: process.env.REACT_APP_THE_MOVIE_DB_API_KEY,
@@ -27,11 +16,15 @@ export function getParameters(params = {}) {
   return `?${parameters}`
 }
 
-export function normalize(dataAsArray) {
-  return dataAsArray.reduce((dataAsDictionary, data) => {
-    return {
-      ...dataAsDictionary,
-      [data.id]: data,
-    }
-  }, {})
+/**
+ * @param {Object} feature Feature which contains details for the API
+ */
+export function getFeatureProps(feature) {
+  if (!feature.isGenre) return {}
+  return {
+    params: {
+      sort_by: 'popularity.desc',
+      with_genres: feature.apiID,
+    },
+  }
 }

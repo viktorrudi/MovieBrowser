@@ -8,24 +8,27 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
+import Snackbar from '@material-ui/core/Snackbar'
 
 import {
   setFilterAction,
   clearFilterAction,
+  sendErrorAction,
 } from '../../actions/movieDBActions'
-import * as UTIL from '../../utils'
 
 function AppContainer({
   children,
   // from Redux
   filters = {},
+  errorMessage,
   setFilter,
   clearFilter,
+  sendError,
 }) {
   const { searchTerm } = filters
-
   const history = useHistory()
-  const clearSearchAndGoHome = () => {
+
+  function clearSearchAndGoHome() {
     clearFilter()
     history.push('/')
   }
@@ -51,12 +54,32 @@ function AppContainer({
           </Typography>
           <div style={{ marginLeft: 'auto' }}>
             <TextField
+              autoFocus
+              placeholder="Multi Search..."
+              style={{
+                background: '#fff',
+                opacity: 1,
+                padding: '5px 15px',
+                borderRadius: 5,
+              }}
               value={searchTerm}
-              onChange={(e) => setFilter('searchTerm', e.target.value)}
+              onChange={(e) => {
+                const term = e.target.value
+
+                history.push('/')
+                setFilter('searchTerm', term)
+              }}
             />
           </div>
         </Toolbar>
       </AppBar>
+      <Snackbar
+        open={errorMessage !== ''}
+        message={errorMessage}
+        autoHideDuration={5000}
+        // This will clear the redux state of the active error message
+        onClose={() => sendError('')}
+      />
       <div style={{ margin: 10 }}>{children}</div>
     </div>
   )
@@ -64,9 +87,11 @@ function AppContainer({
 
 const mapStateToProps = (state) => ({
   filters: state.filters,
+  errorMessage: state.errorMessage,
 })
 
 export default connect(mapStateToProps, {
   setFilter: setFilterAction,
   clearFilter: clearFilterAction,
+  sendError: sendErrorAction,
 })(AppContainer)

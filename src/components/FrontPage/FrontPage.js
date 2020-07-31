@@ -5,21 +5,22 @@ import MovieStrip from '../Shared/MovieStrip'
 import MovieSearch from './MovieSearch'
 
 import { FEATURE } from '../../constants'
-const { movie, tv } = FEATURE
+import { getFeatureProps } from '../../utils'
 
-function getFeatureProps(feature) {
-  if (!feature.isGenre) return {}
-  return {
-    params: {
-      sort_by: 'popularity.desc',
-      with_genres: feature.apiID,
-    },
-  }
-}
-
+/**
+ * This component will first render out a list of default features
+ * and search results if you have an active search term
+ * @param {Object} filters contains searchTerm from redux
+ */
 function FrontPage({ filters }) {
-  const features = [movie.popular, tv.popular, movie.family, movie.documentary]
+  const features = [
+    FEATURE.movie.popular,
+    FEATURE.tv.popular,
+    FEATURE.movie.family,
+    FEATURE.movie.documentary,
+  ]
   const hasSearchTerm = filters.searchTerm !== ''
+
   if (hasSearchTerm) return <MovieSearch />
   return features.map((feature) => (
     <div className="FrontPage" style={{ margin: 20 }} key={feature.heading}>
