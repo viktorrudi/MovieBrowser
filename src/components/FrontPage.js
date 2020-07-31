@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import MovieStrip from '../Shared/MovieStrip'
+import MovieStrip from './Shared/MovieStrip'
 import MovieSearch from './MovieSearch'
 
-import { FEATURE } from '../../constants'
-import { getFeatureProps } from '../../utils'
+import { FEATURE } from '../constants'
+import { getFeatureProps } from '../utils'
 
 /**
  * This component will first render out a list of default features

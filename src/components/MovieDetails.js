@@ -6,13 +6,13 @@ import { withRouter } from 'react-router'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import TV from './../Shared/MediaTypes/TV'
-import Person from './../Shared/MediaTypes/Person'
-import Movie from './../Shared/MediaTypes/Movie'
+import TV from './Shared/MediaTypes/TV'
+import Person from './Shared/MediaTypes/Person'
+import Movie from './Shared/MediaTypes/Movie'
 
-import * as CONST from '../../constants'
-import * as UTIL from '../../utils'
-import { sendErrorAction } from '../../actions/movieDBActions'
+import * as CONST from '../constants'
+import * as UTIL from '../utils'
+import { sendErrorAction } from '../actions/movieDBActions'
 
 const mediaTypeComponents = {
   tv: TV,

@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import AppContainer from './components/Shared/AppContainer'
-import FrontPage from './components/FrontPage/FrontPage'
-import MovieDetails from './components/MovieDetails/MovieDetails'
+import FrontPage from './components/FrontPage'
+import MovieDetails from './components/MovieDetails'
 
 import store from './store'
 

@@ -4,10 +4,10 @@ import debounce from 'debounce'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import MovieStrip from '../Shared/MovieStrip'
+import MovieStrip from './Shared/MovieStrip'
 
-import { FEATURE } from '../../constants'
-import { getFeatureDataAction } from '../../actions/movieDBActions'
+import { FEATURE } from '../constants'
+import { getFeatureDataAction } from '../actions/movieDBActions'
 
 /**
  * This component is returned if you have a search query active
