@@ -21,13 +21,15 @@ import { getFeatureDataAction } from '../../actions/movieDBActions'
 function MovieStrip({
   feature,
   params,
+  searchResults,
   // From redux
   features = {},
   getFeatureData,
 }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
-  const results = features[`${feature.specifier}_${feature.key}`]
+  const results =
+    searchResults || features[`${feature.specifier}_${feature.group}`]
   const isLoading = !results
 
   // TODO: Fix horrible way of making layout responsive
@@ -53,7 +55,8 @@ function MovieStrip({
   }
 
   useEffect(() => {
-    getFeatureData(feature, params)
+    const hasNotYetLoaded = Object.keys(features).length === 0
+    if (hasNotYetLoaded) getFeatureData(feature, params)
 
     const handleResize = () => setScreenWidth(window.innerWidth)
     window.addEventListener('resize', handleResize)

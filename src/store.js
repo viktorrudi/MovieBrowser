@@ -3,7 +3,13 @@ import thunk from 'redux-thunk'
 
 import movieDBReducer from './reducers/movieDBReducer'
 
-const initialState = {}
+export const initialState = {
+  config: {},
+  features: {},
+  filters: {
+    searchTerm: '',
+  },
+}
 
 const store = createStore(movieDBReducer, initialState, applyMiddleware(thunk))
 

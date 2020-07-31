@@ -1,24 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
+import { connect } from 'react-redux'
+import debounce from 'debounce'
 
 import * as CONST from '../../constants'
 import * as UTIL from '../../utils'
 
-export default function MovieSearch({ searchTerm = '' }) {
-  const [searchResults, setSearchResults] = useState([])
+import { getFeatureDataAction } from '../../actions/movieDBActions'
+
+import MovieStrip from '../Shared/MovieStrip'
+
+const { search } = CONST.FEATURE
+
+function MovieSearch({
+  // from Redux
+  features = {},
+  filters,
+  getFeatureData,
+}) {
+  const { searchTerm } = filters
+  const [isSearching, setIsSearching] = useState(false)
+
+  const searchParams = {
+    query: searchTerm,
+  }
+  const debouncedGetFeatureData = useCallback(debounce(getFeatureData, 500), [])
+
+  // TODO
+  const errorMessage = ''
+
   useEffect(() => {
     if (searchTerm === '') return
-    const searchParams = {
-      include_adult: true,
-      query: searchTerm,
-    }
-    console.log(
-      `${CONST.API_BASE_URL}search/movie${UTIL.getParameters(searchParams)}`
-    )
-    fetch(
-      `${CONST.API_BASE_URL}search/movie${UTIL.getParameters(searchParams)}`
-    )
-      .then((res) => res.json())
-      .then((data) => console.log('@@@', data))
+    debouncedGetFeatureData(search.multi, searchParams)
+
+    setIsSearching(false)
   }, [searchTerm])
-  return <div>{searchTerm}</div>
+
+  function renderSearchResults() {
+    const { searchResults = {} } = features
+    return Object.entries(searchResults).map(([mediaType, results]) => {
+      const feature = search.multi.mediaTypes[mediaType]
+      return (
+        <MovieStrip key={mediaType} feature={feature} searchResults={results} />
+      )
+    })
+  }
+
+  if (searchTerm === '') return null
+  if (errorMessage) return <div>{errorMessage}</div>
+
+  return (
+    <div className="MovieSearch">
+      {isSearching ? <div>Searching...</div> : renderSearchResults()}
+    </div>
+  )
 }
+
+const mapStateToProps = (state) => ({
+  features: state.features,
+  filters: state.filters,
+})
+
+export default connect(mapStateToProps, {
+  getFeatureData: getFeatureDataAction,
+})(MovieSearch)

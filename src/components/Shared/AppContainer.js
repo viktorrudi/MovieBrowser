@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import HomeIcon from '@material-ui/icons/Home'
 import AppBar from '@material-ui/core/AppBar'
@@ -8,22 +9,33 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
 
-import MovieSearch from '../FrontPage/MovieSearch'
-
+import {
+  setFilterAction,
+  clearFilterAction,
+} from '../../actions/movieDBActions'
 import * as UTIL from '../../utils'
 
-export default function AppContainer({ children }) {
-  const [searchTerm, setSearchTerm] = useState('')
+function AppContainer({
+  children,
+  // from Redux
+  filters = {},
+  setFilter,
+  clearFilter,
+}) {
+  const { searchTerm } = filters
+
   const history = useHistory()
-  const rerouteToHome = () => history.push('/')
-  const debouncedSearchTerm = UTIL.useDebounce(searchTerm, 500)
+  const clearSearchAndGoHome = () => {
+    clearFilter()
+    history.push('/')
+  }
 
   return (
     <div style={{ marginTop: 100 }}>
       <AppBar style={{ position: 'fixed', display: 'flex' }}>
         <Toolbar>
           <IconButton
-            onClick={rerouteToHome}
+            onClick={clearSearchAndGoHome}
             edge="start"
             color="inherit"
             aria-label="menu"
@@ -31,7 +43,7 @@ export default function AppContainer({ children }) {
             <HomeIcon />
           </IconButton>
           <Typography
-            onClick={rerouteToHome}
+            onClick={clearSearchAndGoHome}
             variant="h6"
             style={{ cursor: 'pointer' }}
           >
@@ -40,13 +52,21 @@ export default function AppContainer({ children }) {
           <div style={{ marginLeft: 'auto' }}>
             <TextField
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setFilter('searchTerm', e.target.value)}
             />
           </div>
         </Toolbar>
       </AppBar>
-      <MovieSearch searchTerm={debouncedSearchTerm} />
       <div style={{ margin: 10 }}>{children}</div>
     </div>
   )
 }
+
+const mapStateToProps = (state) => ({
+  filters: state.filters,
+})
+
+export default connect(mapStateToProps, {
+  setFilter: setFilterAction,
+  clearFilter: clearFilterAction,
+})(AppContainer)

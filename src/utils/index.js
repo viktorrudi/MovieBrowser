@@ -16,11 +16,15 @@ export function useDebounce(value, delay) {
 }
 
 export function getParameters(params = {}) {
-  const API_KEY = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
-  const parameters = Object.entries(params)
+  const defaultParams = {
+    api_key: process.env.REACT_APP_THE_MOVIE_DB_API_KEY,
+    language: 'en-US',
+    page: 1,
+  }
+  const parameters = Object.entries({ ...defaultParams, ...params })
     .map(([key, value]) => `${key}=${value}`)
     .join('&')
-  return `?api_key=${API_KEY}&language=en-US&page=1${parameters}`
+  return `?${parameters}`
 }
 
 export function normalize(dataAsArray) {

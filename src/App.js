@@ -15,7 +15,7 @@ function App() {
         <AppContainer>
           <Switch>
             <Route exact path="/" component={FrontPage} />
-            <Route exact path="/:specifier/:key/:id" component={MovieDetails} />
+            <Route path="/:specifier/:group/:id" component={MovieDetails} />
           </Switch>
         </AppContainer>
       </Router>

@@ -12,7 +12,7 @@ export default function MovieButton({ movieDetails, feature }) {
   return (
     <Card
       onClick={() =>
-        history.push(`${feature.specifier}/${feature.key}/${movieDetails.id}`)
+        history.push(`${feature.specifier}/${feature.group}/${movieDetails.id}`)
       }
     >
       <CardActionArea>

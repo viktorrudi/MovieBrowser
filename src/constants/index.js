@@ -10,12 +10,14 @@ export const FEATURE = {
   movie: {
     popular: {
       key: 'popular',
+      group: 'popular',
       uri: 'movie/popular',
       heading: 'Popular Movies',
       specifier: 'movie',
     },
     family: {
       key: 'family',
+      group: 'genre-family',
       isGenre: true,
       heading: 'Family',
       uri: 'discover/movie',
@@ -24,6 +26,7 @@ export const FEATURE = {
     },
     documentary: {
       key: 'documentary',
+      group: 'genre-documentary',
       isGenre: true,
       heading: 'Documentary',
       uri: 'discover/movie',
@@ -34,9 +37,36 @@ export const FEATURE = {
   tv: {
     popular: {
       key: 'popular',
+      group: 'popular',
       uri: 'tv/popular',
-      heading: 'Popular Series',
+      heading: 'Popular TV Series',
       specifier: 'tv',
+    },
+  },
+  search: {
+    multi: {
+      key: 'multi',
+      uri: 'search/multi',
+      mediaTypes: {
+        person: {
+          key: 'person',
+          group: 'search-result',
+          heading: 'Actors',
+          specifier: 'person',
+        },
+        movie: {
+          key: 'movie',
+          group: 'search-result',
+          heading: 'Movies',
+          specifier: 'movie',
+        },
+        tv: {
+          key: 'tv',
+          group: 'search-result',
+          heading: 'TV Series',
+          specifier: 'tv',
+        },
+      },
     },
   },
 }

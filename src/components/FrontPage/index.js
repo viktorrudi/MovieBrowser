@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import MovieStrip from '../Shared/MovieStrip'
 import MovieSearch from './MovieSearch'
@@ -16,14 +17,19 @@ function getFeatureProps(feature) {
   }
 }
 
-export default function FrontPage() {
+function FrontPage({ filters }) {
   const features = [movie.popular, tv.popular, movie.family, movie.documentary]
+  const hasSearchTerm = filters.searchTerm !== ''
+  if (hasSearchTerm) return <MovieSearch />
   return features.map((feature) => (
-    <>
-      <MovieSearch />
-      <div style={{ margin: 20 }} key={feature.heading}>
-        <MovieStrip feature={feature} {...getFeatureProps(feature)} />
-      </div>
-    </>
+    <div className="FrontPage" style={{ margin: 20 }} key={feature.heading}>
+      <MovieStrip feature={feature} {...getFeatureProps(feature)} />
+    </div>
   ))
 }
+
+const mapStateToProps = (state) => ({
+  filters: state.filters,
+})
+
+export default connect(mapStateToProps)(FrontPage)
