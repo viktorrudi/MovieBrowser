@@ -48,9 +48,9 @@ export default function Person({ mediaDetail }) {
           {mediaDetail.biography || 'No info about this actor'}
         </Typography>
       </Grid>
-      <Grid item sm={6} style={{ maxHeight: 500 }}>
+      <Grid item sm={6} style={{ maxHeight: 500, width: '100%' }}>
         {hasImage ? (
-          <img src={backdropURL} />
+          <img src={backdropURL} style={{ width: '100%' }} />
         ) : (
           <div className="empty-state" style={{ height: 300 }}>
             {mediaDetail.name}

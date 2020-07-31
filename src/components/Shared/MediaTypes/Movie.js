@@ -64,13 +64,14 @@ export default function Movie({ mediaDetail }) {
             color="primary"
             onClick={handleWatchMovieClick}
             size="large"
+            style={{ marginBottom: 10 }}
           >
             Watch Movie
           </Button>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item sm={6} style={{ width: '100%' }}>
           {hasImage ? (
-            <img src={backdropURL} />
+            <img src={backdropURL} style={{ width: '100%' }} />
           ) : (
             <div className="empty-state" style={{ height: 300 }}>
               {mediaDetail.title}

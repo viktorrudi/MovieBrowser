@@ -47,9 +47,9 @@ export default function TV({ mediaDetail }) {
       >
         <Typography>{mediaDetail.overview}</Typography>
       </Grid>
-      <Grid item sm={6}>
+      <Grid item sm={6} style={{ width: '100%' }}>
         {hasImage ? (
-          <img src={backdropURL} />
+          <img src={backdropURL} style={{ width: '100%' }} />
         ) : (
           <div className="empty-state" style={{ height: 300 }}>
             {mediaDetail.name}
