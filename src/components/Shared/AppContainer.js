@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
 import Snackbar from '@material-ui/core/Snackbar'
+
+import { MOVIE_BROWSER_TITLE } from '../../constants'
 
 import {
   setFilterAction,
@@ -48,9 +50,10 @@ function AppContainer({
           <Typography
             onClick={clearSearchAndGoHome}
             variant="h6"
+            data-testid="app-name"
             className="AppContainer-button-home"
           >
-            Movie Browser
+            {MOVIE_BROWSER_TITLE}
           </Typography>
           <div className="AppContainer-container-search">
             <TextField
