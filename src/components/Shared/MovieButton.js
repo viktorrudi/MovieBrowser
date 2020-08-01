@@ -22,11 +22,6 @@ export default function MovieButton({ movieDetails, feature }) {
   const imagePath = movieDetails.poster_path || movieDetails.profile_path
   const hasImage = Boolean(imagePath)
 
-  const buttonSizeStyle = {
-    height: CONST.MOVIE_BUTTON.HEIGHT,
-    width: CONST.MOVIE_BUTTON.WIDTH,
-  }
-
   return (
     <Card
       className="MovieButton"

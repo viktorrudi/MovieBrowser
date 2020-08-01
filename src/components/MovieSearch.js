@@ -36,6 +36,9 @@ function MovieSearch({
   }, [searchTerm])
 
   function renderSearchResults() {
+    const nothingFound = Object.values(searchResults).length === 0
+
+    if (nothingFound) return <div className="empty-state">No results</div>
     return Object.entries(searchResults).map(([mediaType, results]) => {
       const feature = FEATURE.search.multi.mediaTypes[mediaType]
       return (
