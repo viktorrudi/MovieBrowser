@@ -34,8 +34,8 @@ function AppContainer({
   }
 
   return (
-    <div style={{ marginTop: 100 }}>
-      <AppBar style={{ position: 'fixed', display: 'flex' }}>
+    <div className="AppContainer">
+      <AppBar>
         <Toolbar>
           <IconButton
             onClick={clearSearchAndGoHome}
@@ -48,20 +48,14 @@ function AppContainer({
           <Typography
             onClick={clearSearchAndGoHome}
             variant="h6"
-            style={{ cursor: 'pointer' }}
+            className="AppContainer-button-home"
           >
             Movie Browser
           </Typography>
-          <div style={{ marginLeft: 'auto' }}>
+          <div className="AppContainer-container-search">
             <TextField
               autoFocus
               placeholder="Multi Search..."
-              style={{
-                background: '#fff',
-                opacity: 1,
-                padding: '5px 15px',
-                borderRadius: 5,
-              }}
               value={searchTerm}
               onChange={(e) => {
                 const term = e.target.value
@@ -80,7 +74,7 @@ function AppContainer({
         // This will clear the redux state of the active error message
         onClose={() => sendError('')}
       />
-      <div style={{ margin: 10 }}>{children}</div>
+      <div className="AppContainer-children">{children}</div>
     </div>
   )
 }

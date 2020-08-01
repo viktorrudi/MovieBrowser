@@ -73,19 +73,11 @@ function MovieStrip({
 
   return (
     <div className="MovieStrip">
-      <Typography variant="h5" style={{ margin: '20px 0' }}>
+      <Typography variant="h5" className="MovieStrip-heading">
         {feature.heading}
       </Typography>
       {isLoading ? (
-        <div
-          style={{
-            height: CONST.MOVIE_BUTTON.HEIGHT,
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="MovieStrip-loader">
           <CircularProgress color="inherit" />
         </div>
       ) : (

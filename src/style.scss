@@ -1,3 +1,12 @@
+$movieButtonHeight: 230px;
+$movieButtonWidth: 150px;
+
+@mixin center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
@@ -8,8 +17,54 @@ body {
   margin: 20px;
 }
 
+.AppContainer {
+  margin-top: 100px;
+  &-button-home {
+    cursor: pointer;
+  }
+  &-container-search {
+    margin-left: auto;
+    .MuiTextField-root {
+      background: #fff;
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+  }
+  &-children {
+    margin: 10px;
+  }
+  .MuiAppBar-root {
+    position: fixed;
+    display: flex;
+  }
+}
+
+.MetaData {
+  ul {
+    padding: 0;
+    text-align: center;
+    li {
+      list-style-type: none;
+      display: inline-flex;
+      margin: 0 10px;
+      .MetaData-data {
+        font-size: 1.5rem;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
 .MovieStrip {
   position: relative;
+  &-heading {
+    margin: 20px 0 !important;
+  }
+  &-loader {
+    @include center-flex;
+    height: $movieButtonHeight;
+    width: 100%;
+  }
   &-direction-button {
     position: absolute;
     bottom: 10px;
@@ -26,76 +81,132 @@ body {
       right: -3px;
     }
   }
+}
 
-  .card-details {
-    opacity: 0;
-    height: 100%;
+.MovieButton {
+  &-set-size {
+    width: $movieButtonWidth;
+    height: $movieButtonHeight;
+  }
+  &-failed-loading {
+    opacity: 1;
+    background: black;
+    height: 70px;
     width: 100%;
-    display: block;
-    transition: opacity 0.2s ease-in-out;
-    &.hovering {
-      opacity: 1;
+    position: absolute;
+    bottom: 3px;
+  }
+  .MuiCardActionArea-root {
+    max-width: $movieButtonWidth;
+    img {
+      height: $movieButtonHeight;
+      width: $movieButtonWidth;
+      image-rendering: '-webkit-optimize-contrast';
     }
-    &.failed-loading {
-      opacity: 1;
-      background: black;
-      height: 70px;
+    .MovieButton-card-details {
+      opacity: 0;
+      height: 100%;
       width: 100%;
-      position: absolute;
-      bottom: 3px;
-    }
-    &-title {
-      color: #fff;
-      margin: 0;
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      line-height: 1rem;
-      font-size: 1rem;
-      font-weight: bold;
-      z-index: 2;
-    }
-    &-backdrop {
-      opacity: 0.5;
-      background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      height: 70px;
-      width: 100%;
-      position: absolute;
-      bottom: 3px;
+      display: block;
+      transition: opacity 0.2s ease-in-out;
+      &.hovering {
+        opacity: 1;
+      }
+      &-title {
+        color: #fff;
+        margin: 0;
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        line-height: 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        z-index: 2;
+      }
+      &-backdrop {
+        opacity: 0.5;
+        background: linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        height: 70px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+      }
     }
   }
 }
 
-.shaka {
-  &-video {
-    position: relative;
-    width: 100%;
+.MovieDetails {
+  &-loader {
+    @include center-flex;
+    height: 200px;
   }
-  &-controls-button-panel {
-    display: none;
-  }
-  &-play-button-container {
-    display: none;
-  }
-  // Seeker
-  &-range-container {
-    position: relative;
-    input {
-      position: absolute;
-      left: 50px;
-      bottom: 50px;
-      width: 90%;
+}
+
+.ShakaDialog {
+  &-title {
+    color: #fff;
+    background: #000 !important;
+    &-button-close {
+      color: #fff !important;
+      position: absolute !important;
+      right: 10px;
+      top: 10px;
     }
   }
-  &-bottom-controls ~ div {
-    display: none;
+  &-content {
+    padding: 0;
+    background: #000;
   }
-  &-spinner-container {
-    display: none;
+
+  // Overrides for controls in shaka player
+  .shaka {
+    &-video {
+      position: relative;
+      width: 100%;
+    }
+    &-controls-button-panel {
+      display: none;
+    }
+    &-play-button-container {
+      display: none;
+    }
+    // Seeker
+    &-range-container {
+      position: relative;
+      input {
+        position: absolute;
+        left: 50px;
+        bottom: 50px;
+        width: 90%;
+      }
+    }
+    &-bottom-controls ~ div {
+      display: none;
+    }
+    &-spinner-container {
+      display: none;
+    }
+  }
+}
+
+.MediaComponent {
+  &-media {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+    div {
+      height: 300px;
+    }
+  }
+  &-overview {
+    .MuiButtonBase-root {
+      margin: 10px 0;
+    }
   }
 }
 
@@ -105,10 +216,8 @@ body {
 }
 
 .empty-state {
+  @include center-flex;
   background: #dcdcdc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 10px;
   box-sizing: border-box;
   font-size: 1.2rem;

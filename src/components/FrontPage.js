@@ -22,11 +22,17 @@ function FrontPage({ filters }) {
   const hasSearchTerm = filters.searchTerm !== ''
 
   if (hasSearchTerm) return <MovieSearch />
-  return features.map((feature) => (
-    <div className="FrontPage" style={{ margin: 20 }} key={feature.heading}>
-      <MovieStrip feature={feature} {...getFeatureProps(feature)} />
+  return (
+    <div className="FrontPage">
+      {features.map((feature) => (
+        <MovieStrip
+          key={feature.heading}
+          feature={feature}
+          {...getFeatureProps(feature)}
+        />
+      ))}
     </div>
-  ))
+  )
 }
 
 const mapStateToProps = (state) => ({

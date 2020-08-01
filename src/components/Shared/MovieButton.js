@@ -29,31 +29,26 @@ export default function MovieButton({ movieDetails, feature }) {
 
   return (
     <Card
+      className="MovieButton"
       onClick={() =>
         history.push(`${feature.mediaType}/${feature.group}/${movieDetails.id}`)
       }
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <CardActionArea style={{ maxWidth: buttonSizeStyle.WIDTH }}>
+      <CardActionArea>
         <div
-          className={`card-details ${hasImage && isHovering ? 'hovering' : ''}`}
+          className={`MovieButton-card-details ${
+            hasImage && isHovering ? 'hovering' : ''
+          }`}
         >
-          <p className="card-details-title">{title}</p>
-          <div className="card-details-backdrop" />
+          <p className="MovieButton-card-details-title">{title}</p>
+          <div className="MovieButton-card-details-backdrop" />
         </div>
         {hasImage ? (
-          <img
-            style={{
-              ...buttonSizeStyle,
-              imageRendering: '-webkit-optimize-contrast',
-            }}
-            src={`${CONST.API_BASE_IMAGE_URL}${imagePath}`}
-          />
+          <img src={`${CONST.API_BASE_IMAGE_URL}${imagePath}`} />
         ) : (
-          <div className="empty-state" style={buttonSizeStyle}>
-            {title}
-          </div>
+          <div className="MovieButton-set-size empty-state">{title}</div>
         )}
       </CardActionArea>
     </Card>

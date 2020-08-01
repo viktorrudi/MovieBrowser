@@ -25,38 +25,28 @@ export default function Person({ mediaDetail }) {
   }
 
   return (
-    <Grid container>
-      <Grid item sm={12} style={{ padding: 20 }}>
-        <Typography variant="h3" align="center" style={{ margin: 0 }}>
-          {mediaDetail.name}
-        </Typography>
-        <MetaData metaData={metaData} />
-      </Grid>
-
-      <Grid
-        item
-        sm={6}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexDirection: 'column',
-          padding: '0 20px',
-          textAlign: 'right',
-        }}
-      >
-        <Typography>
-          {mediaDetail.biography || 'No info about this actor'}
-        </Typography>
-      </Grid>
-      <Grid item sm={6} style={{ maxHeight: 500, width: '100%' }}>
-        {hasImage ? (
-          <img src={backdropURL} style={{ width: '100%' }} />
-        ) : (
-          <div className="empty-state" style={{ height: 300 }}>
+    <div className="MediaComponent">
+      <Grid container>
+        <Grid item sm={12}>
+          <Typography variant="h3" align="center">
             {mediaDetail.name}
-          </div>
-        )}
+          </Typography>
+          <MetaData metaData={metaData} />
+        </Grid>
+
+        <Grid item sm={6} className="MediaComponent-overview">
+          <Typography>
+            {mediaDetail.biography || 'No info about this actor'}
+          </Typography>
+        </Grid>
+        <Grid item sm={6} className="MediaComponent-media">
+          {hasImage ? (
+            <img src={backdropURL} />
+          ) : (
+            <div className="empty-state">{mediaDetail.name}</div>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </div>
   )
 }

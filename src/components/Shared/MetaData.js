@@ -9,24 +9,15 @@ import Typography from '@material-ui/core/Typography'
  */
 export default function MetaData({ metaData }) {
   return (
-    <div>
-      <ul style={{ padding: 0, textAlign: 'center' }}>
+    <div className="MetaData">
+      <ul>
         {Object.entries(metaData)
           .map(([label, data]) => {
             if (!data) return null
             return (
-              <li
-                style={{
-                  display: 'inline-flex',
-                  listStyleType: 'none',
-                  margin: '0 10px',
-                }}
-                key={label}
-              >
-                <Typography variant="caption" style={{ marginRight: 5 }}>
-                  {label}
-                </Typography>
-                <Typography style={{ fontSize: '1.5rem' }}>{data}</Typography>
+              <li key={label}>
+                <Typography variant="caption">{label}</Typography>
+                <Typography className="MetaData-data">{data}</Typography>
               </li>
             )
           })

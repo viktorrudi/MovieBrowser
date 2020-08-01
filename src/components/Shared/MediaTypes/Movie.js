@@ -38,44 +38,31 @@ export default function Movie({ mediaDetail }) {
   }
 
   return (
-    <>
+    <div className="MediaComponent">
       <Grid container>
-        <Grid item sm={12} style={{ padding: 20 }}>
-          <Typography variant="h3" align="center" style={{ margin: 0 }}>
+        <Grid item sm={12}>
+          <Typography variant="h3" align="center">
             {mediaDetail.title}
           </Typography>
           <MetaData metaData={metaData} />
         </Grid>
 
-        <Grid
-          item
-          sm={6}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexDirection: 'column',
-            padding: '0 20px',
-            textAlign: 'right',
-          }}
-        >
+        <Grid item sm={6} className="MediaComponent-overview">
           <Typography>{mediaDetail.overview}</Typography>
           <Button
             variant="contained"
             color="primary"
             onClick={handleWatchMovieClick}
             size="large"
-            style={{ marginBottom: 10 }}
           >
             Watch Movie
           </Button>
         </Grid>
-        <Grid item sm={6} style={{ width: '100%' }}>
+        <Grid item sm={6} className="MediaComponent-media">
           {hasImage ? (
-            <img src={backdropURL} style={{ width: '100%' }} />
+            <img src={backdropURL} />
           ) : (
-            <div className="empty-state" style={{ height: 300 }}>
-              {mediaDetail.title}
-            </div>
+            <div>{mediaDetail.title}</div>
           )}
         </Grid>
       </Grid>
@@ -83,23 +70,24 @@ export default function Movie({ mediaDetail }) {
         open={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         fullScreen
+        className="ShakaDialog"
       >
-        <DialogTitle style={{ color: '#fff', background: '#000' }}>
+        <DialogTitle className="ShakaDialog-title">
           {mediaDetail.title}
           <IconButton
             onClick={() => setIsDialogOpen(false)}
-            style={{ color: '#fff', position: 'absolute', right: 10, top: 10 }}
+            className="ShakaDialog-title-button-close"
           >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent style={{ padding: 0, background: '#000' }}>
+        <DialogContent className="ShakaDialog-content">
           <ShakaPlayer
             autoPlay
             src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
           />
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   )
 }
